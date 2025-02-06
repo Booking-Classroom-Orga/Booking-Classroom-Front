@@ -1,0 +1,9 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".jsx", ".tsx"] }]
+  }
+}
