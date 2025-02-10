@@ -1,5 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -8,24 +14,25 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "@/services/auth.service";
 
 const Signup = () => {
   const form = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    try {
+      await register(data);
+      navigate("/"); // Redirect to login page after successful signup
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen w-full">
       <Card className="w-[400px]">
         <CardHeader>
           <CardTitle className="font-bold">Welcome!</CardTitle>
@@ -34,36 +41,58 @@ const Signup = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <div className=" flex space-x-4">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="First Name" {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Last Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Last Name" {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
-                  <div>
-                    <FormItem className="flex m-0 items-center justify-between space-x-4">
-                      <div className="">
-                        <FormLabel>First Name</FormLabel>
-                        <FormControl className="mt-2">
-                          <Input placeholder="First Name" {...field} />
-                        </FormControl>
-                      </div>
-                      <div className="!mt-0">
-                        <FormLabel>Last Name</FormLabel>
-                        <FormControl className="mt-2">
-                          <Input placeholder="Last Name" {...field} />
-                        </FormControl>
-                      </div>
-                    </FormItem>
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Email" {...field} />
-                      </FormControl>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Password" {...field} />
-                      </FormControl>
-                    </FormItem>
-                  </div>
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Email" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Password"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
                 )}
               />
               <div className="text-center text-sm text-gray-500">
@@ -72,9 +101,9 @@ const Signup = () => {
                   Login
                 </Link>
               </div>
-              <div className=" w-full flex justify-end">
-                <Button type="submit">Sign Up</Button>
-              </div>
+              <Button type="submit" className="w-full">
+                Sign Up
+              </Button>
             </form>
           </Form>
         </CardContent>

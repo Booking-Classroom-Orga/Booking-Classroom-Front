@@ -15,17 +15,24 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authentification } from "@/services/auth.service";
 
 const Login = () => {
   const form = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    try {
+      await authentification(data);
+      navigate("/admin"); // TO CHANGE TO USER DASHBOARD !!!
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen w-full">
       <Card className="w-[400px]">
         <CardHeader>
           <CardTitle className="font-bold">Welcome Back!</CardTitle>
@@ -36,16 +43,28 @@ const Login = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Email" {...field} />
                     </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Password" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Password"
+                        {...field}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -57,9 +76,9 @@ const Login = () => {
                   Signup
                 </Link>
               </div>
-              <div className=" w-full flex justify-end">
-                <Button type="submit">Login</Button>
-              </div>
+              <Button type="submit" className=" w-full">
+                Login
+              </Button>
             </form>
           </Form>
         </CardContent>
