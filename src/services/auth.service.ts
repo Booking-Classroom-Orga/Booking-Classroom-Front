@@ -14,7 +14,8 @@ export const authentification = async (user: UserDto) => {
     throw new Error("User not registered");
   }
   const data = await response.json();
-  localStorage.setItem("token", data.access_token);
+  localStorage.setItem("token", data.accessToken);
+
   return data;
 };
 
