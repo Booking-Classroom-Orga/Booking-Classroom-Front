@@ -10,8 +10,20 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { remove } from "@/services/classroom.service";
 
-const ButtonWithAlert = () => {
+const ButtonWithAlert = ({
+  id,
+  onDelete,
+}: {
+  id: number;
+  onDelete: () => void;
+}) => {
+  const handleDelete = async () => {
+    await remove(Number(id));
+    onDelete();
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -32,7 +44,9 @@ const ButtonWithAlert = () => {
         <AlertDialogFooter className="flex justify-end space-x-2">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction>Disable</AlertDialogAction>
-          <Button variant="destructive">Delete Forever</Button>
+          <Button variant="destructive" onClick={handleDelete}>
+            Delete Forever
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -9,64 +9,39 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Form, FormField, FormItem, FormLabel, FormControl } from "../ui/form";
 import { Textarea } from "../ui/textarea";
-import { update, findById } from "@/services/classroom.service";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { create } from "../../services/classroom.service";
+import { useState } from "react";
 
-const UpdateDialog = ({ id }: { id: number }) => {
-  const form = useForm({
-    defaultValues: {
-      name: "",
-      capacity: 0,
-      equipment: "",
-    },
-  });
+const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
+  const form = useForm();
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (id) {
-        const classroom = await findById(Number(id));
-
-        form.reset({
-          name: classroom.name,
-          capacity: classroom.capacity,
-          equipment: classroom.equipment ? classroom.equipment : "",
-        });
-      }
-    };
-
-    if (open) {
-      fetchData();
-    }
-  }, [id, open]);
 
   const onSubmit = async (data: any) => {
     const parsedData = {
       ...data,
-      equipment: data.equipment
-        ? data.equipment.split(",").map((item: string) => item.trim())
+      equipement: data.equipement
+        ? data.equipement.split(",").map((item: string) => item.trim())
         : [],
     };
 
-    await update(Number(id), parsedData);
+    await create(parsedData);
     setOpen(false);
+    onCreate();
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => setOpen(true)}>
-          Edit
-        </Button>
+        <Button onClick={() => setOpen(true)}>New</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Classroom</DialogTitle>
+          <DialogTitle>New Classroom</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Create a new classroom here. Click create when you're done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -113,15 +88,15 @@ const UpdateDialog = ({ id }: { id: number }) => {
               />
               <FormField
                 control={form.control}
-                name="equipment"
+                name="equipement"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="equipment" className="text-right">
-                      Equipment(s)
+                    <FormLabel htmlFor="equipement" className="text-right">
+                      Equipement(s)
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        id="equipment"
+                        id="equipement"
                         placeholder="eg. Projector, Whiteboard"
                         className="col-span-3"
                         {...field}
@@ -132,7 +107,7 @@ const UpdateDialog = ({ id }: { id: number }) => {
               />
             </div>
             <DialogFooter>
-              <Button type="submit">Save</Button>
+              <Button type="submit">Create</Button>
             </DialogFooter>
           </form>
         </Form>
@@ -141,4 +116,4 @@ const UpdateDialog = ({ id }: { id: number }) => {
   );
 };
 
-export default UpdateDialog;
+export default CreateDialog;

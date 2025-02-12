@@ -1,8 +1,8 @@
 import AdminSidebar from "@/components/custom-ui/admin-sidebar";
-import ClassroomsCard from "./cards/ClassroomsCard";
-import MaterialsCard from "./cards/MaterialsCard";
-import ReservationsCard from "./cards/ReservationsCrard";
-import UsersCard from "./cards/UsersCard";
+import ClassroomsCard from "../../components/custom-ui/cards/ClassroomsCard";
+import MaterialsCard from "../../components/custom-ui/cards/MaterialsCard";
+import ReservationsCard from "../../components/custom-ui/cards/ReservationsCrard";
+import UsersCard from "../../components/custom-ui/cards/UsersCard";
 
 const AdminDashboard = () => {
   return (
@@ -22,8 +22,8 @@ export default AdminDashboard;
 
 // ADMIN TODO //
 // - [ ] CREATE CLASSROOM (CAPACITE, NOM, EQUIPEMENTS)
-// - [X] LIST CLASSROOMS
-// - [X] UPDATE CLASSROOM
+// - [ ] LIST CLASSROOMS
+// - [ ] UPDATE CLASSROOM
 // - [X] DELETE CLASSROOM (OR DISABLE)
 // - [ ] LIST MATERIALS (FROM ANY CLASSROOMS, FILTER, SHOW ACTIVITY (LAST USED OR NEXT USE OR IF USE IN PROGRESS))
 // - [ ] LIST USERS (ROLE, NAME, FILTER, NEXT ACTIVITY OR LAST ACTIVITY, UPDATE, DELETE)
