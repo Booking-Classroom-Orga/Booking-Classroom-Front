@@ -14,21 +14,26 @@ import { Textarea } from "../ui/textarea";
 import { update, findById } from "@/services/classroom.service";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
-const UpdateDialog = () => {
-  const { id } = useParams();
-  const form = useForm();
+const UpdateDialog = ({ id }: { id: number }) => {
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      capacity: 0,
+      equipment: "",
+    },
+  });
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
         const classroom = await findById(Number(id));
+
         form.reset({
           name: classroom.name,
           capacity: classroom.capacity,
-          equipement: classroom.equipement.join(", "),
+          equipment: classroom.equipment ? classroom.equipment : "",
         });
       }
     };
@@ -36,13 +41,13 @@ const UpdateDialog = () => {
     if (open) {
       fetchData();
     }
-  }, [id, open, form]);
+  }, [id, open]);
 
   const onSubmit = async (data: any) => {
     const parsedData = {
       ...data,
-      equipement: data.equipement
-        ? data.equipement.split(",").map((item: string) => item.trim())
+      equipment: data.equipment
+        ? data.equipment.split(",").map((item: string) => item.trim())
         : [],
     };
 
@@ -108,15 +113,15 @@ const UpdateDialog = () => {
               />
               <FormField
                 control={form.control}
-                name="equipement"
+                name="equipment"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="equipement" className="text-right">
-                      Equipement(s)
+                    <FormLabel htmlFor="equipment" className="text-right">
+                      Equipment(s)
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        id="equipement"
+                        id="equipment"
                         placeholder="eg. Projector, Whiteboard"
                         className="col-span-3"
                         {...field}

@@ -48,6 +48,7 @@ export const update = async (id: number, classroom: ClassroomDto) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify(classroom),
   });

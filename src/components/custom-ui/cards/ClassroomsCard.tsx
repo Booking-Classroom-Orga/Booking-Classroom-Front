@@ -48,7 +48,7 @@ const ClassroomsCard = () => {
               <AccordionTrigger>{classroom.name}</AccordionTrigger>
               <AccordionContent className="flex justify-end space-x-4">
                 <Button variant="secondary">More</Button>
-                <UpdateDialog />
+                <UpdateDialog id={classroom.id} />
                 <ButtonWithAlert />
               </AccordionContent>
             </AccordionItem>
