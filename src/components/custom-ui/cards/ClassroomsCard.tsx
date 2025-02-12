@@ -17,17 +17,17 @@ import CreateDialog from "../create-dialog";
 const ClassroomsCard = () => {
   const [classrooms, setClassrooms] = useState<ClassroomType[]>([]);
 
-  useEffect(() => {
-    const fetchClassrooms = async () => {
-      try {
-        const data = await findAll();
-        setClassrooms(data);
-        console.log("Classrooms fetched:", data);
-      } catch (error) {
-        console.error("Failed to fetch classrooms:", error);
-      }
-    };
+  const fetchClassrooms = async () => {
+    try {
+      const data = await findAll();
+      setClassrooms(data);
+      console.log("Classrooms fetched:", data);
+    } catch (error) {
+      console.error("Failed to fetch classrooms:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchClassrooms();
   }, []);
 
@@ -38,7 +38,7 @@ const ClassroomsCard = () => {
           <CardTitle className="font-bold flex items-center">
             <School className="w-5 h-5 mr-2" /> Classrooms
           </CardTitle>
-          <CreateDialog />
+          <CreateDialog onCreate={fetchClassrooms} />
         </div>
       </CardHeader>
       <CardContent>
@@ -49,7 +49,7 @@ const ClassroomsCard = () => {
               <AccordionContent className="flex justify-end space-x-4">
                 <Button variant="secondary">More</Button>
                 <UpdateDialog id={classroom.id} />
-                <ButtonWithAlert />
+                <ButtonWithAlert id={classroom.id} onDelete={fetchClassrooms} />
               </AccordionContent>
             </AccordionItem>
           ))}

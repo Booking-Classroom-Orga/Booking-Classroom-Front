@@ -59,6 +59,9 @@ export const update = async (id: number, classroom: ClassroomDto) => {
 export const remove = async (id: number) => {
   const response = await fetch(`${API_URL}/classrooms/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
   });
   const data = await response.json();
   return data;

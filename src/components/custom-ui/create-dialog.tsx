@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { create } from "../../services/classroom.service";
 import { useState } from "react";
 
-const CreateDialog = () => {
+const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
   const form = useForm();
   const [open, setOpen] = useState(false);
 
@@ -29,6 +29,7 @@ const CreateDialog = () => {
 
     await create(parsedData);
     setOpen(false);
+    onCreate();
   };
 
   return (
@@ -87,15 +88,15 @@ const CreateDialog = () => {
               />
               <FormField
                 control={form.control}
-                name="equipment"
+                name="equipement"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="equipment" className="text-right">
-                      Equipment(s)
+                    <FormLabel htmlFor="equipement" className="text-right">
+                      Equipement(s)
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        id="equipment"
+                        id="equipement"
                         placeholder="eg. Projector, Whiteboard"
                         className="col-span-3"
                         {...field}
