@@ -7,12 +7,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { School } from "lucide-react";
-import ButtonWithAlert from "@/components/custom-ui/button-with-alert";
-import UpdateDialog from "@/components/custom-ui/edit-dialog";
+import ButtonWithAlert from "@/components/custom-ui/classrooms/button-with-alert";
+import UpdateDialog from "@/components/custom-ui/classrooms/edit-dialog";
 import { useEffect, useState } from "react";
 import { findAll } from "@/services/classroom.service";
 import { ClassroomType } from "@/types/classroom.type";
-import CreateDialog from "../create-dialog";
+import CreateDialog from "../classrooms/create-dialog";
 
 const ClassroomsCard = () => {
   const [classrooms, setClassrooms] = useState<ClassroomType[]>([]);
@@ -48,7 +48,7 @@ const ClassroomsCard = () => {
               <AccordionTrigger>{classroom.name}</AccordionTrigger>
               <AccordionContent className="flex justify-end space-x-4">
                 <Button variant="secondary">More</Button>
-                <UpdateDialog id={classroom.id} />
+                <UpdateDialog id={classroom.id} onUpdate={fetchClassrooms} />
                 <ButtonWithAlert id={classroom.id} onDelete={fetchClassrooms} />
               </AccordionContent>
             </AccordionItem>

@@ -6,13 +6,19 @@ import {
   DialogDescription,
   DialogHeader,
   DialogFooter,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+} from "../../ui/dialog";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Textarea } from "../../ui/textarea";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "../../ui/form";
 import { useForm } from "react-hook-form";
-import { create } from "../../services/classroom.service";
+import { create } from "../../../services/classroom.service";
 import { useState } from "react";
 
 const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
