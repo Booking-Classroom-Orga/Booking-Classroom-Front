@@ -6,21 +6,33 @@ import {
   DialogDescription,
   DialogHeader,
   DialogFooter,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Form, FormField, FormItem, FormLabel, FormControl } from "../ui/form";
-import { Textarea } from "../ui/textarea";
-import { update, findById } from "@/services/classroom.service";
+} from "../../ui/dialog";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+} from "../../ui/form";
+import { Textarea } from "../../ui/textarea";
+import { update, findById } from "@/services/user.service";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-const UpdateDialog = ({ id }: { id: number }) => {
+const UpdateDialog = ({
+  id,
+  onUpdate,
+}: {
+  id: number;
+  onUpdate: () => void;
+}) => {
   const form = useForm({
     defaultValues: {
-      name: "",
-      capacity: 0,
-      equipment: "",
+      firstName: "",
+      lastName: "",
+      email: "",
     },
   });
   const [open, setOpen] = useState(false);
@@ -28,12 +40,12 @@ const UpdateDialog = ({ id }: { id: number }) => {
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
-        const classroom = await findById(Number(id));
+        const user = await findById(Number(id));
 
         form.reset({
-          name: classroom.name,
-          capacity: classroom.capacity,
-          equipment: classroom.equipment ? classroom.equipment : "",
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
         });
       }
     };
@@ -44,15 +56,9 @@ const UpdateDialog = ({ id }: { id: number }) => {
   }, [id, open]);
 
   const onSubmit = async (data: any) => {
-    const parsedData = {
-      ...data,
-      equipment: data.equipment
-        ? data.equipment.split(",").map((item: string) => item.trim())
-        : [],
-    };
-
-    await update(Number(id), parsedData);
+    await update(Number(id), data);
     setOpen(false);
+    onUpdate();
   };
 
   return (
@@ -64,9 +70,9 @@ const UpdateDialog = ({ id }: { id: number }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Classroom</DialogTitle>
+          <DialogTitle>Edit User</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Update the user's informations below. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -74,16 +80,16 @@ const UpdateDialog = ({ id }: { id: number }) => {
             <div className="grid gap-4 py-4">
               <FormField
                 control={form.control}
-                name="name"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="name" className="text-right">
-                      Name
+                    <FormLabel htmlFor="FirstName" className="text-right">
+                      First Name
                     </FormLabel>
                     <FormControl>
                       <Input
                         id="name"
-                        placeholder="eg. Class A"
+                        placeholder="eg. John"
                         className="col-span-3"
                         {...field}
                       />
@@ -93,18 +99,17 @@ const UpdateDialog = ({ id }: { id: number }) => {
               />
               <FormField
                 control={form.control}
-                name="capacity"
+                name="lastName"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="capacity" className="text-right">
-                      Capacity
+                    <FormLabel htmlFor="lastName" className="text-right">
+                      Last Name
                     </FormLabel>
                     <FormControl>
                       <Input
                         id="capacity"
-                        placeholder="eg. 30"
+                        placeholder="eg. Doe"
                         className="col-span-3"
-                        type="number"
                         {...field}
                       />
                     </FormControl>
@@ -113,16 +118,16 @@ const UpdateDialog = ({ id }: { id: number }) => {
               />
               <FormField
                 control={form.control}
-                name="equipment"
+                name="email"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="equipment" className="text-right">
-                      Equipment(s)
+                    <FormLabel htmlFor="email" className="text-right">
+                      Email
                     </FormLabel>
                     <FormControl>
                       <Textarea
                         id="equipment"
-                        placeholder="eg. Projector, Whiteboard"
+                        placeholder="eg. johndoe@mail.com"
                         className="col-span-3"
                         {...field}
                       />

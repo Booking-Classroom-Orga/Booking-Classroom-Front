@@ -7,8 +7,33 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { UserType } from "@/types/user.type";
+import { findAll, remove } from "@/services/user.service";
+import UpdateDialog from "../users/edit-dialog";
 
 const UsersCard = () => {
+  const [users, setUsers] = useState<UserType[]>([]);
+
+  const fetchUsers = async () => {
+    try {
+      const data = await findAll();
+      setUsers(data);
+      console.log("Users fetched:", data);
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleDelete = async (user: UserType) => {
+    await remove(Number(user.id));
+    fetchUsers();
+  };
+
   return (
     <Card className="w-[400px]">
       <CardHeader>
@@ -16,27 +41,27 @@ const UsersCard = () => {
           <CardTitle className="font-bold flex items-center">
             <Users className="w-5 h-5 mr-2" /> Users
           </CardTitle>
-          <Button>New</Button>
         </div>
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>User 1</AccordionTrigger>
-            <AccordionContent className="flex justify-end items-center space-x-4">
-              <Button variant="secondary">More</Button>
-              <Button>Edit</Button>
-              <Button variant="destructive">Delete</Button>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>User 2</AccordionTrigger>
-            <AccordionContent className="flex justify-end space-x-4">
-              <Button variant="secondary">More</Button>
-              <Button>Edit</Button>
-              <Button variant="destructive">Delete</Button>
-            </AccordionContent>
-          </AccordionItem>
+          {users.map((user) => (
+            <AccordionItem key={user.id} value={`item-${user.id}`}>
+              <AccordionTrigger>
+                {user.firstName} {user.lastName}
+              </AccordionTrigger>
+              <AccordionContent className="flex justify-end items-center space-x-4">
+                <Button variant="secondary">More</Button>
+                <UpdateDialog id={user.id} onUpdate={fetchUsers} />
+                <Button
+                  variant="destructive"
+                  onClick={() => handleDelete(user)}
+                >
+                  Delete
+                </Button>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
       </CardContent>
     </Card>
