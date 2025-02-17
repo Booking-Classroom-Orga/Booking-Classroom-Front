@@ -3,6 +3,7 @@ export type ClassroomType = {
   name: string;
   capacity: number;
   equipment: string[];
+  isAvailable: boolean;
 };
 
 export type ClassroomDto = {
