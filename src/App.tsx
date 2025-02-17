@@ -4,6 +4,7 @@ import Signup from "./pages/auth/Signup";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import { SidebarProvider } from "./components/ui/sidebar";
 import ListClassroom from "./pages/classroom/ListClassroom";
+import SingleClassroom from "./pages/classroom/SingleClassroom";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/list-classrooms" element={<ListClassroom />} />
+          <Route path="/classroom/:id" element={<SingleClassroom />} />
         </Routes>
       </Router>
     </SidebarProvider>

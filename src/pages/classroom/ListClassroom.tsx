@@ -12,9 +12,11 @@ import { Button } from "@/components/ui/button";
 import { findAll } from "@/services/classroom.service";
 import { ClassroomType } from "@/types/classroom.type";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ListClassroom = () => {
   const [classrooms, setClassrooms] = useState<ClassroomType[]>([]);
+  const navigate = useNavigate();
 
   const fetchClassrooms = async () => {
     try {
@@ -30,6 +32,10 @@ const ListClassroom = () => {
     fetchClassrooms();
   }, []);
 
+  const goToSingleClassroom = (id: number) => {
+    navigate(`/classroom/${id}`);
+  };
+
   return (
     <>
       <CustomSidebar />
@@ -43,7 +49,12 @@ const ListClassroom = () => {
             <AccordionItem key={classroom.id} value={`item-${classroom.id}`}>
               <AccordionTrigger>{classroom.name}</AccordionTrigger>
               <AccordionContent className="flex space-x-4">
-                <Button variant="secondary">More</Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => goToSingleClassroom(classroom.id)}
+                >
+                  More
+                </Button>
                 <UpdateDialog id={classroom.id} onUpdate={fetchClassrooms} />
                 <ButtonWithAlert id={classroom.id} onDelete={fetchClassrooms} />
               </AccordionContent>
