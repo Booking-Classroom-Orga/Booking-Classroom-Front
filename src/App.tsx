@@ -5,6 +5,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import { SidebarProvider } from "./components/ui/sidebar";
 import ListClassroom from "./pages/classroom/ListClassroom";
 import SingleClassroom from "./pages/classroom/SingleClassroom";
+import ListUser from "./pages/user/ListUser";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/list-classrooms" element={<ListClassroom />} />
           <Route path="/classroom/:id" element={<SingleClassroom />} />
+          <Route path="/list-users" element={<ListUser />} />
         </Routes>
       </Router>
     </SidebarProvider>
