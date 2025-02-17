@@ -13,7 +13,7 @@ import UserProfile from "./user-profile";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 
-const AdminSidebar = () => {
+const CustomSidebar = () => {
   return (
     <Sidebar className="w-64 h-screen ">
       <SidebarContent>
@@ -23,7 +23,7 @@ const AdminSidebar = () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link to="/admin/classrooms">Classrooms</Link>
+                  <Link to="/list-classrooms">Classrooms</Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -53,4 +53,4 @@ const AdminSidebar = () => {
   );
 };
 
-export default AdminSidebar;
+export default CustomSidebar;
