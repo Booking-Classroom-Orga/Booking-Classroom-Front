@@ -9,7 +9,7 @@ import {
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { remove } from "@/services/classroom.service";
+import { remove } from "@/services/user.service";
 
 const ButtonWithAlert = ({
   id,
@@ -31,11 +31,11 @@ const ButtonWithAlert = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Do you really want to delete this Classroom?
+            Do you really want to delete this User?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            classroom and remove the data from the system.
+            This action cannot be undone. This will permanently delete this user
+            and remove the data from the system.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex justify-end space-x-2">

@@ -9,15 +9,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { findById, remove } from "@/services/user.service";
+import { findById } from "@/services/user.service";
 import { UserType } from "@/types/user.type";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { getUserId } from "@/services/auth.service";
+import ButtonWithAlert from "@/components/custom-ui/users/button-with-alert";
 
 const SingleUser = () => {
   const [user, setUser] = useState<UserType | null>(null);
+  const [connectedUserId, setConnectedUserId] = useState<number | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -32,13 +35,20 @@ const SingleUser = () => {
   };
 
   useEffect(() => {
+    const fetchConnectedUserId = async () => {
+      const userId = getUserId();
+      setConnectedUserId(userId);
+
+      // Fetch the connected user's details to check if they are an admin
+      if (userId) {
+        const connectedUser = await findById(userId);
+        setIsAdmin(connectedUser.roles.includes("admin"));
+      }
+    };
+
+    fetchConnectedUserId();
     fetchUser();
   }, [id]);
-
-  const handleDelete = async (id: number) => {
-    await remove(Number(id));
-    fetchUser();
-  };
 
   const goBack = () => {
     navigate(-1);
@@ -52,17 +62,15 @@ const SingleUser = () => {
           <div className="flex items-center mb-4 gap-1">
             <ArrowLeft className="w-6 h-6 cursor-pointer" onClick={goBack} />
             <h1 className="font-bold text-3xl">
-              {user?.firstName} {user?.lastName}
+              {user?.firstName} {user?.lastName}{" "}
+              {connectedUserId === user?.id && <span>( You )</span>}
             </h1>
           </div>
           <div className="flex gap-4">
             <UpdateDialog id={Number(id)} onUpdate={fetchUser} />
-            <Button
-              variant="destructive"
-              onClick={() => handleDelete(Number(id))}
-            >
-              Delete
-            </Button>
+            {isAdmin && connectedUserId !== user?.id && (
+              <ButtonWithAlert id={Number(id)} onDelete={fetchUser} />
+            )}
           </div>
         </div>
 
