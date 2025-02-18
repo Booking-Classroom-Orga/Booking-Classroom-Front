@@ -58,10 +58,18 @@ const SingleUser = () => {
         </div>
 
         <div>
-          <Card className="w-fit flex px-4 py-2 mb-4">
-            <h2 className="text-sm font-bold text-gray-500">Email:&nbsp;</h2>
-            <p className="text-sm">{user?.email}</p>
-          </Card>
+          <div>
+            <Card className="w-fit flex px-4 py-2 mb-4">
+              <h2 className="text-sm font-bold text-gray-500">Email:&nbsp;</h2>
+              <p className="text-sm">{user?.email}</p>
+            </Card>
+            <Card className="w-fit flex px-4 py-2 mb-4">
+              <h2 className="text-sm font-bold text-gray-500">Role:&nbsp;</h2>
+              <p className="text-sm">
+                {user?.roles.includes("admin") ? "Admin" : "User"}
+              </p>
+            </Card>
+          </div>
           <div className="rounded-md border mb-4">
             <Table>
               <TableHeader>
