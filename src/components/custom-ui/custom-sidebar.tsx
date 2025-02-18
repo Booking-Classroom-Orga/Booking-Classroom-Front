@@ -8,10 +8,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import UserProfile from "./user-profile";
-import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+} from '@/components/ui/sidebar';
+import UserProfile from './user-profile';
+import { Separator } from '@/components/ui/separator';
+import { Link } from 'react-router-dom';
 
 const CustomSidebar = () => {
   return (
@@ -50,11 +50,11 @@ const CustomSidebar = () => {
                   <Link to="/list-classrooms">Classrooms</Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {/* <SidebarMenuItem>
+              <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link to="/admin/materials">Materials</Link>
+                  <Link to="/list-equipments">Equipments</Link>
                 </SidebarMenuButton>
-              </SidebarMenuItem> */}
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link to="/list-users">Users</Link>
