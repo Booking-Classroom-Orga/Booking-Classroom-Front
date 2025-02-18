@@ -7,13 +7,15 @@ import ListClassroom from "./pages/classroom/ListClassroom";
 import SingleClassroom from "./pages/classroom/SingleClassroom";
 import ListUser from "./pages/user/ListUser";
 import SingleUser from "./pages/user/SingleUser";
+import CommonDashboard from "./pages/CommonDashboard";
 
 function App() {
   return (
     <SidebarProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<CommonDashboard />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/list-classrooms" element={<ListClassroom />} />

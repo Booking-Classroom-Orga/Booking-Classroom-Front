@@ -25,7 +25,7 @@ const Signup = () => {
   const onSubmit = async (data: any) => {
     try {
       await register(data);
-      navigate("/"); // Redirect to login page after successful signup
+      navigate("/login"); // Redirect to login page after successful signup
     } catch (error) {
       console.error("Signup failed:", error);
     }

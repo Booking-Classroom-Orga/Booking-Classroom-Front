@@ -25,7 +25,7 @@ const Login = () => {
   const onSubmit = async (data: any) => {
     try {
       await authentification(data);
-      navigate("/admin"); // TO CHANGE TO USER DASHBOARD !!!
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
     }

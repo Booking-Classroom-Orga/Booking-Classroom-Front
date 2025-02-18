@@ -8,13 +8,14 @@ import {
 } from "@/components/ui/accordion";
 import { CalendarCheck } from "lucide-react";
 
-const ReservationsCard = () => {
+const UserReservationsCard = () => {
   return (
     <Card className="w-[500px]">
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle className="font-bold flex items-center">
-            <CalendarCheck className="w-5 h-5 mr-2" /> Reservations
+            <CalendarCheck className="w-5 h-5 mr-2" />
+            Your Reservations
           </CardTitle>
           <Button>New</Button>
         </div>
@@ -44,4 +45,4 @@ const ReservationsCard = () => {
   );
 };
 
-export default ReservationsCard;
+export default UserReservationsCard;
