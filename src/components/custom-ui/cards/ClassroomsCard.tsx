@@ -38,7 +38,7 @@ const ClassroomsCard = () => {
   };
 
   return (
-    <Card className="w-[400px]">
+    <Card className="w-[500px]">
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle className="font-bold flex items-center">

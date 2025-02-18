@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { findAll } from "@/services/user.service";
+import { findAll, remove } from "@/services/user.service";
 import { UserType } from "@/types/user.type";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,11 @@ const ListUser = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const handleDelete = async (user: UserType) => {
+    await remove(Number(user.id));
+    fetchUsers();
+  };
 
   const goToSingleUser = (id: number) => {
     navigate(`/user/${id}`);
@@ -55,6 +60,12 @@ const ListUser = () => {
                   More
                 </Button>
                 <UpdateDialog id={user.id} onUpdate={fetchUsers} />
+                <Button
+                  variant="destructive"
+                  onClick={() => handleDelete(user)}
+                >
+                  Delete
+                </Button>
               </AccordionContent>
             </AccordionItem>
           ))}
