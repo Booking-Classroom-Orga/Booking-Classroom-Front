@@ -67,18 +67,23 @@ const SingleClassroom = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="font-bold">Equipment</TableHead>
+                  <TableHead className="font-bold">Quantity</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {classroom?.equipment && classroom.equipment.length > 0 ? (
                   classroom.equipment.map((item, index) => (
                     <TableRow key={index}>
-                      <TableCell>{item}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.quantity}</TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="text-gray-300 text-lg text-center font-bold">
+                    <TableCell
+                      colSpan={2}
+                      className="text-gray-300 text-lg text-center font-bold"
+                    >
                       No Equipment
                     </TableCell>
                   </TableRow>
@@ -90,10 +95,7 @@ const SingleClassroom = () => {
             <h2 className="text-sm font-bold text-gray-500">
               Available:&nbsp;
             </h2>
-            <p className="text-sm">
-              {classroom?.isAvailable}{" "}
-              {classroom?.isAvailable === true ? "Yes" : "No"}
-            </p>
+            <p className="text-sm">{classroom?.isAvailable ? "Yes" : "No"}</p>
           </Card>
         </div>
       </div>
