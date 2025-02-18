@@ -1,6 +1,7 @@
 import { UserDto } from "../types/user.type";
+import { jwtDecode } from "jwt-decode";
 
-export const API_URL = "http://localhost:8000/api";
+export const API_URL = import.meta.env.VITE_API_URL;
 
 export const authentification = async (user: UserDto) => {
   const response = await fetch(`${API_URL}/auth/login`, {
@@ -36,4 +37,13 @@ export const register = async (user: UserDto) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+};
+
+export const getUserId = () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const decodedToken: any = jwtDecode(token);
+    return decodedToken.id; // Adjust this based on your token structure
+  }
+  return null;
 };
