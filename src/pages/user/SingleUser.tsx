@@ -34,8 +34,8 @@ const SingleUser = () => {
     fetchUser();
   }, [id]);
 
-  const goToListUser = () => {
-    navigate("/list-users");
+  const goBack = () => {
+    navigate(-1);
   };
 
   return (
@@ -44,10 +44,7 @@ const SingleUser = () => {
       <div className="flex flex-col p-4 w-full">
         <div className="flex justify-between items-center">
           <div className="flex items-center mb-4 gap-1">
-            <ArrowLeft
-              className="w-6 h-6 cursor-pointer"
-              onClick={goToListUser}
-            />
+            <ArrowLeft className="w-6 h-6 cursor-pointer" onClick={goBack} />
             <h1 className="font-bold text-3xl">
               {user?.firstName} {user?.lastName}
             </h1>

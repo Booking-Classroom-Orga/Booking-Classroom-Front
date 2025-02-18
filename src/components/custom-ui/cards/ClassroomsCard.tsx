@@ -13,9 +13,11 @@ import { useEffect, useState } from "react";
 import { findAll } from "@/services/classroom.service";
 import { ClassroomType } from "@/types/classroom.type";
 import CreateDialog from "../classrooms/create-dialog";
+import { useNavigate } from "react-router-dom";
 
 const ClassroomsCard = () => {
   const [classrooms, setClassrooms] = useState<ClassroomType[]>([]);
+  const navigate = useNavigate();
 
   const fetchClassrooms = async () => {
     try {
@@ -30,6 +32,10 @@ const ClassroomsCard = () => {
   useEffect(() => {
     fetchClassrooms();
   }, []);
+
+  const goToSingleClassroom = (id: number) => {
+    navigate(`/classroom/${id}`);
+  };
 
   return (
     <Card className="w-[400px]">
@@ -47,7 +53,12 @@ const ClassroomsCard = () => {
             <AccordionItem key={classroom.id} value={`item-${classroom.id}`}>
               <AccordionTrigger>{classroom.name}</AccordionTrigger>
               <AccordionContent className="flex justify-end space-x-4">
-                <Button variant="secondary">More</Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => goToSingleClassroom(classroom.id)}
+                >
+                  More
+                </Button>
                 <UpdateDialog id={classroom.id} onUpdate={fetchClassrooms} />
                 <ButtonWithAlert id={classroom.id} onDelete={fetchClassrooms} />
               </AccordionContent>
