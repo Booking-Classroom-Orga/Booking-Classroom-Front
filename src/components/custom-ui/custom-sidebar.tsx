@@ -23,7 +23,7 @@ const CustomSidebar = () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link to="/admin">Home</Link>
+                  <Link to="/">Home</Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

@@ -3,13 +3,10 @@ import { Avatar } from "@/components/ui/avatar";
 import { UserCircle } from "lucide-react";
 import { getUserId } from "@/services/auth.service";
 import { findById } from "@/services/user.service";
+import { UserType } from "@/types/user.type";
 
 const UserProfile = () => {
-  const [user, setUser] = useState<{
-    firstName: string;
-    lastName: string;
-    email: string;
-  } | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {

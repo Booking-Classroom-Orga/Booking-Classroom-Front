@@ -15,9 +15,12 @@ import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { getUserId } from "@/services/auth.service";
 
 const SingleUser = () => {
   const [user, setUser] = useState<UserType | null>(null);
+  const [connectedUserId, setConnectedUserId] = useState<number | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -32,12 +35,24 @@ const SingleUser = () => {
   };
 
   useEffect(() => {
+    const fetchConnectedUserId = async () => {
+      const userId = getUserId();
+      setConnectedUserId(userId);
+
+      // Fetch the connected user's details to check if they are an admin
+      if (userId) {
+        const connectedUser = await findById(userId);
+        setIsAdmin(connectedUser.roles.includes("admin"));
+      }
+    };
+
+    fetchConnectedUserId();
     fetchUser();
   }, [id]);
 
   const handleDelete = async (id: number) => {
     await remove(Number(id));
-    fetchUser();
+    navigate("/list-users");
   };
 
   const goBack = () => {
@@ -52,17 +67,20 @@ const SingleUser = () => {
           <div className="flex items-center mb-4 gap-1">
             <ArrowLeft className="w-6 h-6 cursor-pointer" onClick={goBack} />
             <h1 className="font-bold text-3xl">
-              {user?.firstName} {user?.lastName}
+              {user?.firstName} {user?.lastName}{" "}
+              {connectedUserId === user?.id && <span>( You )</span>}
             </h1>
           </div>
           <div className="flex gap-4">
             <UpdateDialog id={Number(id)} onUpdate={fetchUser} />
-            <Button
-              variant="destructive"
-              onClick={() => handleDelete(Number(id))}
-            >
-              Delete
-            </Button>
+            {isAdmin && connectedUserId !== user?.id && (
+              <Button
+                variant="destructive"
+                onClick={() => handleDelete(Number(id))}
+              >
+                Delete
+              </Button>
+            )}
           </div>
         </div>
 

@@ -11,9 +11,11 @@ import { findAll, remove } from "@/services/user.service";
 import { UserType } from "@/types/user.type";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserId } from "@/services/auth.service";
 
 const ListUser = () => {
   const [users, setUsers] = useState<UserType[]>([]);
+  const [connectedUserId, setConnectedUserId] = useState<number | null>(null);
   const navigate = useNavigate();
 
   const fetchUsers = async () => {
@@ -27,6 +29,12 @@ const ListUser = () => {
   };
 
   useEffect(() => {
+    const fetchConnectedUserId = async () => {
+      const userId = getUserId();
+      setConnectedUserId(userId);
+    };
+
+    fetchConnectedUserId();
     fetchUsers();
   }, []);
 
@@ -50,7 +58,10 @@ const ListUser = () => {
           {users.map((user) => (
             <AccordionItem key={user.id} value={`item-${user.id}`}>
               <AccordionTrigger>
-                {user.firstName} {user.lastName}
+                <div>
+                  {user.firstName} {user.lastName}{" "}
+                  {connectedUserId === user.id && <span>(You)</span>}
+                </div>
               </AccordionTrigger>
               <AccordionContent className="flex space-x-4">
                 <Button
@@ -60,12 +71,14 @@ const ListUser = () => {
                   More
                 </Button>
                 <UpdateDialog id={user.id} onUpdate={fetchUsers} />
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(user)}
-                >
-                  Delete
-                </Button>
+                {connectedUserId !== user.id && (
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleDelete(user)}
+                  >
+                    Delete
+                  </Button>
+                )}
               </AccordionContent>
             </AccordionItem>
           ))}
