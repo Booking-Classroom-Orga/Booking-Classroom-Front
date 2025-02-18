@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/button";
 import { findAll } from "@/services/user.service";
 import { UserType } from "@/types/user.type";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ListUser = () => {
   const [users, setUsers] = useState<UserType[]>([]);
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const fetchUsers = async () => {
     try {
@@ -30,9 +30,9 @@ const ListUser = () => {
     fetchUsers();
   }, []);
 
-  //   const goToSingleUser = (id: number) => {
-  //     navigate(`/user/${id}`);
-  //   };
+  const goToSingleUser = (id: number) => {
+    navigate(`/user/${id}`);
+  };
 
   return (
     <>
@@ -50,7 +50,7 @@ const ListUser = () => {
               <AccordionContent className="flex space-x-4">
                 <Button
                   variant="secondary"
-                  //   onClick={() => goToSingleUser(user.id)}
+                  onClick={() => goToSingleUser(user.id)}
                 >
                   More
                 </Button>

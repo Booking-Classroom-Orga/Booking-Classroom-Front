@@ -35,8 +35,8 @@ const SingleClassroom = () => {
     fetchClassroom();
   }, [id]);
 
-  const goToListClassroom = () => {
-    navigate("/list-classrooms");
+  const goBack = () => {
+    navigate(-1);
   };
 
   return (
@@ -45,15 +45,12 @@ const SingleClassroom = () => {
       <div className="flex flex-col p-4 w-full">
         <div className="flex justify-between items-center">
           <div className="flex items-center mb-4 gap-1">
-            <ArrowLeft
-              className="w-6 h-6 cursor-pointer"
-              onClick={goToListClassroom}
-            />
+            <ArrowLeft className="w-6 h-6 cursor-pointer" onClick={goBack} />
             <h1 className="font-bold text-3xl">{classroom?.name}</h1>
           </div>
           <div className="flex gap-4">
             <UpdateDialog id={Number(id)} onUpdate={fetchClassroom} />
-            <ButtonWithAlert id={Number(id)} onDelete={goToListClassroom} />
+            <ButtonWithAlert id={Number(id)} onDelete={goBack} />
           </div>
         </div>
 
