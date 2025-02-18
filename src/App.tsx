@@ -10,6 +10,7 @@ import SingleUser from './pages/user/SingleUser';
 import CommonDashboard from './pages/CommonDashboard';
 import UserNotConnected from './pages/UserNotConnected';
 import PrivateRoute from './components/private-route/PrivateRoute';
+import ListEquipment from './pages/equipment/ListEquipment';
 
 function App() {
   return (
@@ -64,6 +65,14 @@ function App() {
             element={
               <PrivateRoute>
                 <SingleUser />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/list-equipments"
+            element={
+              <PrivateRoute>
+                <ListEquipment />
               </PrivateRoute>
             }
           />
