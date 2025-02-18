@@ -1,36 +1,84 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { Button } from "./components/ui/button";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import { SidebarProvider } from './components/ui/sidebar';
+import ListClassroom from './pages/classroom/ListClassroom';
+import SingleClassroom from './pages/classroom/SingleClassroom';
+import ListUser from './pages/user/ListUser';
+import SingleUser from './pages/user/SingleUser';
+import CommonDashboard from './pages/CommonDashboard';
+import UserNotConnected from './pages/UserNotConnected';
+import PrivateRoute from './components/private-route/PrivateRoute';
+import ListEquipment from './pages/equipment/ListEquipment';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <Button>Click me</Button>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <SidebarProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<UserNotConnected />} />
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <CommonDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <AdminDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/list-classrooms"
+            element={
+              <PrivateRoute>
+                <ListClassroom />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/classroom/:id"
+            element={
+              <PrivateRoute>
+                <SingleClassroom />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/list-users"
+            element={
+              <PrivateRoute>
+                <ListUser />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <PrivateRoute>
+                <SingleUser />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/list-equipments"
+            element={
+              <PrivateRoute>
+                <ListEquipment />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </SidebarProvider>
   );
 }
 
