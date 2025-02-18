@@ -6,6 +6,7 @@ import { SidebarProvider } from "./components/ui/sidebar";
 import ListClassroom from "./pages/classroom/ListClassroom";
 import SingleClassroom from "./pages/classroom/SingleClassroom";
 import ListUser from "./pages/user/ListUser";
+import SingleUser from "./pages/user/SingleUser";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/list-classrooms" element={<ListClassroom />} />
           <Route path="/classroom/:id" element={<SingleClassroom />} />
           <Route path="/list-users" element={<ListUser />} />
+          <Route path="/user/:id" element={<SingleUser />} />
         </Routes>
       </Router>
     </SidebarProvider>
