@@ -9,13 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { findById, remove } from "@/services/user.service";
+import { findById } from "@/services/user.service";
 import { UserType } from "@/types/user.type";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { getUserId } from "@/services/auth.service";
+import ButtonWithAlert from "@/components/custom-ui/users/button-with-alert";
 
 const SingleUser = () => {
   const [user, setUser] = useState<UserType | null>(null);
@@ -50,11 +50,6 @@ const SingleUser = () => {
     fetchUser();
   }, [id]);
 
-  const handleDelete = async (id: number) => {
-    await remove(Number(id));
-    navigate("/list-users");
-  };
-
   const goBack = () => {
     navigate(-1);
   };
@@ -74,12 +69,7 @@ const SingleUser = () => {
           <div className="flex gap-4">
             <UpdateDialog id={Number(id)} onUpdate={fetchUser} />
             {isAdmin && connectedUserId !== user?.id && (
-              <Button
-                variant="destructive"
-                onClick={() => handleDelete(Number(id))}
-              >
-                Delete
-              </Button>
+              <ButtonWithAlert id={Number(id)} onDelete={fetchUser} />
             )}
           </div>
         </div>

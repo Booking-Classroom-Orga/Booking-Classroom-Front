@@ -7,11 +7,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { findAll, remove } from "@/services/user.service";
+import { findAll } from "@/services/user.service";
 import { UserType } from "@/types/user.type";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserId } from "@/services/auth.service";
+import ButtonWithAlert from "@/components/custom-ui/users/button-with-alert";
 
 const ListUser = () => {
   const [users, setUsers] = useState<UserType[]>([]);
@@ -37,11 +38,6 @@ const ListUser = () => {
     fetchConnectedUserId();
     fetchUsers();
   }, []);
-
-  const handleDelete = async (user: UserType) => {
-    await remove(Number(user.id));
-    fetchUsers();
-  };
 
   const goToSingleUser = (id: number) => {
     navigate(`/user/${id}`);
@@ -72,12 +68,7 @@ const ListUser = () => {
                 </Button>
                 <UpdateDialog id={user.id} onUpdate={fetchUsers} />
                 {connectedUserId !== user.id && (
-                  <Button
-                    variant="destructive"
-                    onClick={() => handleDelete(user)}
-                  >
-                    Delete
-                  </Button>
+                  <ButtonWithAlert id={user.id} onDelete={fetchUsers} />
                 )}
               </AccordionContent>
             </AccordionItem>
