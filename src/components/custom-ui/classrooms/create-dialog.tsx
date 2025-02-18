@@ -6,20 +6,14 @@ import {
   DialogDescription,
   DialogHeader,
   DialogFooter,
-} from "../../ui/dialog";
-import { Button } from "../../ui/button";
-import { Input } from "../../ui/input";
-import { Textarea } from "../../ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "../../ui/form";
-import { useForm } from "react-hook-form";
-import { create } from "../../../services/classroom.service";
-import { useState } from "react";
+} from '../../ui/dialog';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '../../ui/form';
+import { useForm } from 'react-hook-form';
+import { create } from '../../../services/classroom.service';
+import { useState } from 'react';
 
 const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
   const form = useForm();
@@ -29,7 +23,7 @@ const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
     const parsedData = {
       ...data,
       equipement: data.equipement
-        ? data.equipement.split(",").map((item: string) => item.trim())
+        ? data.equipement.split(',').map((item: string) => item.trim())
         : [],
     };
 
