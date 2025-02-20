@@ -8,6 +8,7 @@ import SingleClassroom from "./pages/classroom/SingleClassroom";
 import ListUser from "./pages/user/ListUser";
 import SingleUser from "./pages/user/SingleUser";
 import CommonDashboard from "./pages/CommonDashboard";
+import SingleReservation from "@/pages/reservation/SingleReservation.tsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/classroom/:id" element={<SingleClassroom />} />
           <Route path="/list-users" element={<ListUser />} />
           <Route path="/user/:id" element={<SingleUser />} />
+          <Route path="/reservation/:id" element={<SingleReservation/>}/>
         </Routes>
       </Router>
     </SidebarProvider>

@@ -60,11 +60,6 @@ const CustomSidebar = () => {
                   <Link to="/list-users">Users</Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {/* <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link to="/admin/reservations">Reservations</Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem> */}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
