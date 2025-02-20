@@ -11,6 +11,7 @@ import CommonDashboard from "./pages/CommonDashboard";
 import UserNotConnected from './pages/UserNotConnected';
 import PrivateRoute from './components/private-route/PrivateRoute';
 import ListEquipment from './pages/equipment/ListEquipment';
+import VerificationCode from "@/pages/auth/VerificationCode.tsx";
 import SingleReservation from "@/pages/reservation/SingleReservation.tsx";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/verify-code" element={<VerificationCode />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/list-classrooms" element={<ListClassroom />} />
           <Route path="/classroom/:id" element={<SingleClassroom />} />
