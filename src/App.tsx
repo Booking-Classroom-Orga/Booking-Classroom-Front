@@ -11,6 +11,7 @@ import CommonDashboard from './pages/CommonDashboard';
 import UserNotConnected from './pages/UserNotConnected';
 import PrivateRoute from './components/private-route/PrivateRoute';
 import ListEquipment from './pages/equipment/ListEquipment';
+import VerificationCode from "@/pages/auth/VerificationCode.tsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/verify-code" element={<VerificationCode />} />
           <Route
             path="/admin"
             element={
