@@ -1,5 +1,5 @@
-import { UserDto } from '../types/user.type';
-import { jwtDecode } from 'jwt-decode';
+import {UserDto} from '../types/user.type';
+import {jwtDecode} from 'jwt-decode';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 
@@ -17,6 +17,20 @@ export const authentification = async (user: UserDto) => {
   });
   if (!response.ok) {
     throw new Error('User not registered');
+  }
+  return await response.json();
+};
+
+export const verifyCode = async (email: string, code: string) => {
+  const response = await fetch(`${API_URL}/auth/verify-code`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, code }),
+  });
+  if (!response.ok) {
+    throw new Error('Verification failed');
   }
   const data = await response.json();
   localStorage.setItem('token', data.accessToken);

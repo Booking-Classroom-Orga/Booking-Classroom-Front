@@ -1,7 +1,7 @@
 import CustomSidebar from "@/components/custom-ui/custom-sidebar";
 import ClassroomsCard from "../../components/custom-ui/cards/ClassroomsCard";
 import MaterialsCard from "../../components/custom-ui/cards/MaterialsCard";
-import ReservationsCard from "../../components/custom-ui/cards/ReservationsCrard";
+import ReservationsCard from "../../components/custom-ui/cards/ReservationsCard.tsx";
 import UsersCard from "../../components/custom-ui/cards/UsersCard";
 
 const AdminDashboard = () => {
