@@ -1,4 +1,4 @@
-import { UserDto } from "../types/user.type";
+import { EquipmentDto } from "@/types/equipment.type";
 
 export const API_URL = import.meta.env.VITE_API_URL;
 
@@ -8,7 +8,7 @@ const getToken = () => {
 
 export const findAll = async () => {
   const token = getToken();
-  const response = await fetch(`${API_URL}/users`, {
+  const response = await fetch(`${API_URL}/equipments`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -20,7 +20,7 @@ export const findAll = async () => {
 
 export const findById = async (id: number) => {
   const token = getToken();
-  const response = await fetch(`${API_URL}/users/${id}`, {
+  const response = await fetch(`${API_URL}/equipments/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -29,35 +29,35 @@ export const findById = async (id: number) => {
   return data;
 };
 
-export const create = async (user: UserDto) => {
-  const response = await fetch(`${API_URL}/users`, {
+export const create = async (equipment: EquipmentDto) => {
+  const response = await fetch(`${API_URL}/equipments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getToken()}`,
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify(equipment),
   });
   const data = await response.json();
-  console.log("Create user", data);
+  console.log("Create equipment", data);
   return data;
 };
 
-export const update = async (id: number, user: UserDto) => {
-  const response = await fetch(`${API_URL}/users/${id}`, {
+export const update = async (id: number, equipment: EquipmentDto) => {
+  const response = await fetch(`${API_URL}/equipments/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getToken()}`,
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify(equipment),
   });
   const data = await response.json();
   return data;
 };
 
 export const remove = async (id: number) => {
-  const response = await fetch(`${API_URL}/users/${id}`, {
+  const response = await fetch(`${API_URL}/equipments/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${getToken()}`,

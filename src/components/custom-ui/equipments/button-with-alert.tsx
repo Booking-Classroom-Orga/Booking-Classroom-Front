@@ -7,17 +7,11 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { remove } from "@/services/classroom.service";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { remove } from '@/services/equipment.service';
 
-const ButtonWithAlert = ({
-  id,
-  onDelete,
-}: {
-  id: number;
-  onDelete: () => void;
-}) => {
+const ButtonWithAlert = ({ id, onDelete }: { id: number; onDelete: () => void }) => {
   const handleDelete = async () => {
     await remove(Number(id));
     onDelete();
@@ -30,12 +24,10 @@ const ButtonWithAlert = ({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Do you really want to delete this Classroom?
-          </AlertDialogTitle>
+          <AlertDialogTitle>Do you really want to delete this Equipment?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            classroom and remove the data from the system.
+            This action cannot be undone. This will permanently delete this Equipment and remove the
+            data from the system.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex justify-end space-x-2">

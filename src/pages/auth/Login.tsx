@@ -1,22 +1,10 @@
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { Link, useNavigate } from "react-router-dom";
-import { authentification } from "@/services/auth.service";
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Link, useNavigate } from 'react-router-dom';
+import { authentification } from '@/services/auth.service';
 
 const Login = () => {
   const form = useForm();
@@ -25,9 +13,9 @@ const Login = () => {
   const onSubmit = async (data: any) => {
     try {
       await authentification(data);
-      navigate("/");
+      navigate('/home');
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error('Login failed:', error);
     }
   };
 
@@ -60,11 +48,7 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Password"
-                        {...field}
-                      />
+                      <Input type="password" placeholder="Password" {...field} />
                     </FormControl>
                   </FormItem>
                 )}

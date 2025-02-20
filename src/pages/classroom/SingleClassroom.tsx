@@ -1,7 +1,7 @@
-import ButtonWithAlert from "@/components/custom-ui/classrooms/button-with-alert";
-import UpdateDialog from "@/components/custom-ui/classrooms/edit-dialog";
-import CustomSidebar from "@/components/custom-ui/custom-sidebar";
-import { Card } from "@/components/ui/card";
+import ButtonWithAlert from '@/components/custom-ui/classrooms/button-with-alert';
+import UpdateDialog from '@/components/custom-ui/classrooms/edit-dialog';
+import CustomSidebar from '@/components/custom-ui/custom-sidebar';
+import { Card } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -9,15 +9,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { findById } from "@/services/classroom.service";
-import { ClassroomType } from "@/types/classroom.type";
-import { ArrowLeft } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+} from '@/components/ui/table';
+import { findById } from '@/services/classroom.service';
+import { ClassroomType } from '@/types/classroom.type';
+import { ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getUserId } from '@/services/auth.service';
+import { findById as findUserById } from '@/services/user.service';
 
 const SingleClassroom = () => {
   const [classroom, setClassroom] = useState<ClassroomType | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -25,13 +28,26 @@ const SingleClassroom = () => {
     try {
       const data = await findById(Number(id));
       setClassroom(data);
-      console.log("Classroom fetched:", data);
+      console.log('Classroom fetched:', data);
     } catch (error) {
-      console.error("Failed to fetch classroom:", error);
+      console.error('Failed to fetch classroom:', error);
     }
   };
 
   useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const userId = getUserId();
+        if (userId) {
+          const user = await findUserById(userId);
+          setIsAdmin(user.roles.includes('admin'));
+        }
+      } catch (error) {
+        console.error('Failed to fetch user role:', error);
+      }
+    };
+
+    fetchUserRole();
     fetchClassroom();
   }, [id]);
 
@@ -49,8 +65,12 @@ const SingleClassroom = () => {
             <h1 className="font-bold text-3xl">{classroom?.name}</h1>
           </div>
           <div className="flex gap-4">
-            <UpdateDialog id={Number(id)} onUpdate={fetchClassroom} />
-            <ButtonWithAlert id={Number(id)} onDelete={goBack} />
+            {isAdmin && (
+              <>
+                <UpdateDialog id={Number(id)} onUpdate={fetchClassroom} />
+                <ButtonWithAlert id={Number(id)} onDelete={goBack} />
+              </>
+            )}
           </div>
         </div>
 
@@ -58,8 +78,7 @@ const SingleClassroom = () => {
           <Card className="w-fit flex px-4 py-2 mb-4">
             <h2 className="text-sm font-bold text-gray-500">Capacity:&nbsp;</h2>
             <p className="text-sm">
-              {classroom?.capacity}{" "}
-              {classroom?.capacity === 1 ? "person" : "people"}
+              {classroom?.capacity} {classroom?.capacity === 1 ? 'person' : 'people'}
             </p>
           </Card>
           <div className="rounded-md border mb-4">
@@ -67,18 +86,20 @@ const SingleClassroom = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="font-bold">Equipment</TableHead>
+                  <TableHead className="font-bold">Quantity</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {classroom?.equipment && classroom.equipment.length > 0 ? (
                   classroom.equipment.map((item, index) => (
                     <TableRow key={index}>
-                      <TableCell>{item}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.quantity}</TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="text-gray-300 text-lg text-center font-bold">
+                    <TableCell colSpan={2} className="text-gray-300 text-lg text-center font-bold">
                       No Equipment
                     </TableCell>
                   </TableRow>
@@ -87,13 +108,8 @@ const SingleClassroom = () => {
             </Table>
           </div>
           <Card className="w-fit flex px-4 py-2 mb-4">
-            <h2 className="text-sm font-bold text-gray-500">
-              Available:&nbsp;
-            </h2>
-            <p className="text-sm">
-              {classroom?.isAvailable}{" "}
-              {classroom?.isAvailable === true ? "Yes" : "No"}
-            </p>
+            <h2 className="text-sm font-bold text-gray-500">Available:&nbsp;</h2>
+            <p className="text-sm">{classroom?.isAvailable ? 'Yes' : 'No'}</p>
           </Card>
         </div>
       </div>

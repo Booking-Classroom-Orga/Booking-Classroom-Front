@@ -9,12 +9,15 @@ import {
 import { Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { UserType } from "@/types/user.type";
-import { findAll, remove } from "@/services/user.service";
+import { findAll } from "@/services/user.service";
 import UpdateDialog from "../users/edit-dialog";
 import { useNavigate } from "react-router-dom";
+import { getUserId } from "@/services/auth.service";
+import ButtonWithAlert from "../users/button-with-alert";
 
 const UsersCard = () => {
   const [users, setUsers] = useState<UserType[]>([]);
+  const [connectedUserId, setConnectedUserId] = useState<number | null>(null);
   const navigate = useNavigate();
 
   const fetchUsers = async () => {
@@ -28,13 +31,14 @@ const UsersCard = () => {
   };
 
   useEffect(() => {
+    const fetchConnectedUserId = async () => {
+      const userId = getUserId();
+      setConnectedUserId(userId);
+    };
+
+    fetchConnectedUserId();
     fetchUsers();
   }, []);
-
-  const handleDelete = async (user: UserType) => {
-    await remove(Number(user.id));
-    fetchUsers();
-  };
 
   const goToSingleUser = (id: number) => () => {
     navigate(`/user/${id}`);
@@ -54,19 +58,19 @@ const UsersCard = () => {
           {users.map((user) => (
             <AccordionItem key={user.id} value={`item-${user.id}`}>
               <AccordionTrigger>
-                {user.firstName} {user.lastName}
+                <div>
+                  {user.firstName} {user.lastName}{" "}
+                  {connectedUserId === user.id && <span>(You)</span>}
+                </div>
               </AccordionTrigger>
               <AccordionContent className="flex justify-end items-center space-x-4">
                 <Button variant="secondary" onClick={goToSingleUser(user.id)}>
                   More
                 </Button>
                 <UpdateDialog id={user.id} onUpdate={fetchUsers} />
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(user)}
-                >
-                  Delete
-                </Button>
+                {connectedUserId !== user.id && (
+                  <ButtonWithAlert id={user.id} onDelete={fetchUsers} />
+                )}
               </AccordionContent>
             </AccordionItem>
           ))}

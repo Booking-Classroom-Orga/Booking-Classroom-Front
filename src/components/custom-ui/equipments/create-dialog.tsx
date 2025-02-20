@@ -9,10 +9,9 @@ import {
 } from '../../ui/dialog';
 import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
-import { Textarea } from '../../ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../../ui/form';
 import { useForm } from 'react-hook-form';
-import { create } from '../../../services/classroom.service';
+import { create } from '../../../services/equipment.service';
 import { useState } from 'react';
 
 const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
@@ -20,14 +19,7 @@ const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
   const [open, setOpen] = useState(false);
 
   const onSubmit = async (data: any) => {
-    const parsedData = {
-      ...data,
-      equipement: data.equipement
-        ? data.equipement.split(',').map((item: string) => item.trim())
-        : [],
-    };
-
-    await create(parsedData);
+    await create(data);
     setOpen(false);
     onCreate();
   };
@@ -39,9 +31,9 @@ const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>New Classroom</DialogTitle>
+          <DialogTitle>New Equipment</DialogTitle>
           <DialogDescription>
-            Create a new classroom here. Click create when you're done.
+            Create a new equipment here. Click create when you're done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -56,49 +48,25 @@ const CreateDialog = ({ onCreate }: { onCreate: () => void }) => {
                       Name
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        id="name"
-                        placeholder="eg. Class A"
-                        className="col-span-3"
-                        {...field}
-                      />
+                      <Input id="name" placeholder="eg. Table" className="col-span-3" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="capacity"
+                name="quantity"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="capacity" className="text-right">
-                      Capacity
+                    <FormLabel htmlFor="quantity" className="text-right">
+                      Quantity
                     </FormLabel>
                     <FormControl>
                       <Input
-                        id="capacity"
+                        id="quantity"
                         placeholder="eg. 30"
                         className="col-span-3"
                         type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="equipement"
-                render={({ field }) => (
-                  <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel htmlFor="equipement" className="text-right">
-                      Equipement(s)
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        id="equipement"
-                        placeholder="eg. Projector, Whiteboard"
-                        className="col-span-3"
                         {...field}
                       />
                     </FormControl>
