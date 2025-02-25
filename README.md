@@ -1,50 +1,57 @@
-# React + TypeScript + Vite
+# Classroom Booking Frontend 🎓
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Classroom Booking Frontend**! This project provides a user-friendly interface for managing classroom reservations and tracking equipment. 🚀
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents 📋
 
-## Expanding the ESLint configuration
+- [About the Project](#about-the-project)
+- [Key Features](#key-features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## About the Project 🧠
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+The Classroom Booking Frontend offers an intuitive interface for users to book classrooms and manage equipment. Designed for ease of use and efficiency, it complements the backend API to provide a complete solution for educational institutions.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Key Features ✨
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **🚀 User-Friendly Interface**: Easy-to-navigate UI for booking and managing classrooms.
+- **🔒 Secure Access**: Implements JWT authentication for secure access.
+- **🛠️ Equipment Management**: Track and manage classroom equipment.
+
+---
+
+## Prerequisites 📦
+
+- Node.js (v18+)
+- npm (v9+)
+
+---
+
+## Installation 🛠️
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/Booking-Classroom-Orga/Booking-Classroom-Front.git
+   cd Booking-Classroom-Front
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+
+**Happy Booking** 🎉
